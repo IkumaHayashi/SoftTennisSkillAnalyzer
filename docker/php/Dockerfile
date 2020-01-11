@@ -23,7 +23,8 @@ RUN set -eux && \
     git && \
   apk add --update --no-cache \
     icu-dev \
-    libzip-dev && \
+    libzip-dev \
+    npm && \
   #OSの設定
   cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime && \
   echo ${TZ} > /etc/timezone && \

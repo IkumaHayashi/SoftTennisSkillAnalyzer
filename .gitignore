@@ -3,3 +3,4 @@
 /docker/ash/.ash_history
 /logs/*
 desktop.ini
+.env

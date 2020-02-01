@@ -8,5 +8,6 @@ $factory->define(\App\Models\Organization::class, function (Faker $faker) {
 
     return [
         'name' => 'そふてにあっぷクラブ',
+        'user_id' =>factory(\App\User::class)->create()->id,
     ];
 });

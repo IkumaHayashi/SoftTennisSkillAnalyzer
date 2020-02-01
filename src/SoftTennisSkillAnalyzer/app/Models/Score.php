@@ -1,0 +1,61 @@
+<?php
+
+namespace App\Models;
+
+use App\Models\Model;
+
+class Score extends CamelModel
+{
+    /**
+     * 関連のあるUserオブジェクトを返す
+     *
+     * @return \App\User $user
+     */
+    public function user()
+    {
+        return $this->belongsTo(\App\User::class);
+    }
+    
+    /**
+     * 関連のあるPlauerオブジェクトを返す
+     *
+     * @return \App\Models\Player $player
+     */
+    public function player1_1()
+    {
+        return $this->player(__FUNCTION__ . '_id');
+    }
+    /**
+     * 関連のあるPlauerオブジェクトを返す
+     *
+     * @return \App\Models\Player $player
+     */
+    public function player1_2()
+    {
+        return $this->player(__FUNCTION__ . '_id');
+    }
+    /**
+     * 関連のあるPlauerオブジェクトを返す
+     *
+     * @return \App\Models\Player $player
+     */
+    public function player2_1()
+    {
+        return $this->player(__FUNCTION__ . '_id');
+    }
+    /**
+     * 関連のあるPlauerオブジェクトを返す
+     *
+     * @return \App\Models\Player $player
+     */
+    public function player2_2()
+    {
+        return $this->player(__FUNCTION__ . '_id');
+    }
+
+    private function player(string $attributeName)
+    {
+        print_r($attributeName);
+        return $this->belongsTo(\App\Models\Player::class, $attributeName);
+    }
+}

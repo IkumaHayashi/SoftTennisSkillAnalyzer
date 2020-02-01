@@ -11,6 +11,12 @@ use Illuminate\Support\Str;
  */
 abstract class CamelModel extends EloquentModel
 {
+
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+    }
+
     public function getAttribute($key)
     {
         return parent::getAttribute(Str::snake($key));

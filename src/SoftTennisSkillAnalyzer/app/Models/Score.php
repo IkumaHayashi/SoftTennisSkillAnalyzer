@@ -53,9 +53,14 @@ class Score extends CamelModel
         return $this->player(__FUNCTION__ . '_id');
     }
 
+    /**
+     * 渡されたplayer番号のオブジェクトを返す
+     *
+     * @param string $attributeName
+     * @return \App\Models\Player
+     */
     private function player(string $attributeName)
     {
-        print_r($attributeName);
         return $this->belongsTo(\App\Models\Player::class, $attributeName);
     }
 }

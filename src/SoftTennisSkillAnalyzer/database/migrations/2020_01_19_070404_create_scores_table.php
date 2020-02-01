@@ -20,7 +20,7 @@ class CreateScoresTable extends Migration
             $table->unsignedBigInteger('player1_2_id');
             $table->unsignedBigInteger('player2_1_id');
             $table->unsignedBigInteger('player2_2_id');
-            $table->text('note');
+            $table->string('note', 200)->default('');
             $table->timestamps();
             
             $table->index('user_id');

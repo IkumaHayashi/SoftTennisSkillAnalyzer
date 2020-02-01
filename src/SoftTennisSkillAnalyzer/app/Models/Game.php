@@ -21,7 +21,7 @@ class Game extends CamelModel
      */
     public function score()
     {
-        return $this->belongsTo(\App\User::class);
+        return $this->belongsTo(\App\Models\Score::class);
     }
 }
 

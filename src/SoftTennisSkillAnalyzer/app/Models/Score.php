@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use App\Models\Model;
+use Illuminate\Database\Eloquent\Model;
 
-class Score extends CamelModel
+class Score extends Model
 {
     /**
      * 関連のあるUserオブジェクトを返す

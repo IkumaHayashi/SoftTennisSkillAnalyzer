@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
-class Game extends CamelModel
+use Illuminate\Database\Eloquent\Model;
+
+class Game extends Model
 {
     /**
      * 関連のあるUserオブジェクトを返す

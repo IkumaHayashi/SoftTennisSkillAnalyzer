@@ -2,9 +2,13 @@
 
 namespace App\Models;
 
-use App\Models\Model;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class ScoreKind extends CamelModel
+class ScoreKind extends Model
 {
-    //
+    public function points(): HasMany
+    {
+        return $this->hasMany(\App\Models\Point::class);
+    }
 }

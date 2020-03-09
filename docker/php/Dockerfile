@@ -19,11 +19,11 @@ RUN set -eux && \
     gcc \
     g++ \
     make \
-    tzdata \
     git && \
   apk add --update --no-cache \
     icu-dev \
     libzip-dev \
+    tzdata \
     npm && \
   #OSの設定
   cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime && \

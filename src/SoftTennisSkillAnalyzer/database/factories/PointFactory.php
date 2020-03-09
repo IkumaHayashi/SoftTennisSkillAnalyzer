@@ -6,17 +6,17 @@ use Faker\Generator as Faker;
 
 $factory->define(\App\Models\Point::class, function (Faker $faker) {
 
-    $scoreKind = new \App\Models\ScoreKind();
-    $scoreKind->name = 'サービス';
-    $scoreKind->description = 'プレーを開始するとき(ポイントの最初)の打球';
-    $scoreKind->save();
+    $pointKind = new \App\Models\PointKind();
+    $pointKind->name = 'サービス';
+    $pointKind->description = 'プレーを開始するとき(ポイントの最初)の打球';
+    $pointKind->save();
 
     $game = factory(\App\Models\Game::class)->create();
 
     return [
         'game_id' => $game->id,
-        'score_player_id' => $game->score->player1_1->id,
-        'score_kind_id' => $scoreKind->id,
+        'end_player_id' => $game->score->player1_1->id,
+        'point_kind_id' => $pointKind->id,
         'is_winner' => true,
     ];
     

@@ -24,17 +24,17 @@ class Point extends Model
      */
     public function player(): BelongsTo
     {
-        return $this->belongsTo(\App\Models\Player::class, 'score_player_id');
+        return $this->belongsTo(\App\Models\Player::class, 'end_player_id');
     }
 
     /**
-     * 関連のあるScoreKindオブジェクトを返す
+     * 関連のあるPointKindオブジェクトを返す
      *
-     * @return \App\Models\ScoreKind $scoreKind
+     * @return \App\Models\PointKind $pointKind
      */
-    public function scoreKind() : BelongsTo
+    public function pointKind() : BelongsTo
     {
-        return $this->belongsTo(\App\Models\ScoreKind::class);
+        return $this->belongsTo(\App\Models\PointKind::class);
     }
 
     /**

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateScoreKindsTable extends Migration
+class CreatePointKindsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateScoreKindsTable extends Migration
      */
     public function up()
     {
-        Schema::create('score_kinds', function (Blueprint $table) {
+        Schema::create('point_kinds', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
             $table->text('description');
@@ -28,6 +28,6 @@ class CreateScoreKindsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('score_kinds');
+        Schema::dropIfExists('point_kinds');
     }
 }

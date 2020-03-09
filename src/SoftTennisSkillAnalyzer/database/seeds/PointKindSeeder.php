@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class ScoreKindSeeder extends Seeder
+class PointKindSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -30,11 +30,11 @@ class ScoreKindSeeder extends Seeder
         //DBへの挿入
         foreach($seeds as $seed){
             
-            $scoreKind = new \App\Models\ScoreKind();
+            $pointKind = new \App\Models\PointKind();
             foreach($seed as $key => $value){
-                $scoreKind->$key = $value;
+                $pointKind->$key = $value;
             }
-            $scoreKind->save();
+            $pointKind->save();
         }
     }
 }

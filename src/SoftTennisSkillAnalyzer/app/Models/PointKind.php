@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class ScoreKind extends Model
+class PointKind extends Model
 {
     public function points(): HasMany
     {

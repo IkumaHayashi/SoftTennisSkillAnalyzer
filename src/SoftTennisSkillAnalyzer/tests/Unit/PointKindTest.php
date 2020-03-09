@@ -5,9 +5,9 @@ namespace Tests\Unit;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
-use ScoreKindSeeder;
+use PointKindSeeder;
 
-class ScoreKindTest extends TestCase
+class PointKindTest extends TestCase
 {
     /**
      * @test
@@ -16,7 +16,7 @@ class ScoreKindTest extends TestCase
      */
     public function シードがエラーなく動作する()
     {
-        $this->seed(ScoreKindSeeder::class);
+        $this->seed(PointKindSeeder::class);
         $this->assertTrue(true);
     }
 }

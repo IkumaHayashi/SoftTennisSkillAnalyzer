@@ -19,5 +19,6 @@ $factory->define(\App\Models\Score::class, function (Faker $faker) {
         'player2_1_id' => $players[2]->id,
         'player2_2_id' => $players[3]->id,
         'note' => '',
+        'match_day' => new DateTime(),
     ];
 });

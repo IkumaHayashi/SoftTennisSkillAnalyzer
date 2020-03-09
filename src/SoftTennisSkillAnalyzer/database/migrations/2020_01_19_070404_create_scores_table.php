@@ -21,6 +21,7 @@ class CreateScoresTable extends Migration
             $table->unsignedBigInteger('player2_1_id');
             $table->unsignedBigInteger('player2_2_id');
             $table->string('note', 200)->default('');
+            $table->dateTime('match_day')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamps();
             
             $table->index('user_id');

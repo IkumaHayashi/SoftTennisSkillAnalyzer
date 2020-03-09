@@ -16,15 +16,12 @@ class CreatePointsTable extends Migration
         Schema::create('points', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('game_id');
-            $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('score_player_id');
             $table->unsignedBigInteger('score_kind_id');
             $table->boolean('is_winner');
             $table->timestamps();
 
-            $table->foreign('user_id')
-                  ->references('id')->on('users')
-                  ->onDelete('cascade');
+            $table->index('game_id');
 
             $table->foreign('game_id')
                   ->references('id')->on('games')

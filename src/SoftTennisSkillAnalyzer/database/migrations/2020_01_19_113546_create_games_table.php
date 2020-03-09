@@ -16,21 +16,15 @@ class CreateGamesTable extends Migration
         Schema::create('games', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('score_id');
-            $table->unsignedBigInteger('user_id');
             $table->integer('count1');
             $table->integer('count2');
             $table->timestamps();
 
-            $table->index('user_id');
+            $table->index('score_id');
 
             $table->foreign('score_id')
                   ->references('id')->on('scores')
                   ->onDelete('cascade');
-                  
-            $table->foreign('user_id')
-                  ->references('id')->on('users')
-                  ->onDelete('cascade');
-
         });
     }
 

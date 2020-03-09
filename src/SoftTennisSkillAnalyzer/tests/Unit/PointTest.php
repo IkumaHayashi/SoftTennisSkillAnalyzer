@@ -24,7 +24,6 @@ class PointTest extends TestCase
 
         //検証
         $this->assertNotNull($point->game->id);
-        $this->assertNotNull($point->user->id);
         $this->assertNotNull($point->scoreKind->id);
         $this->assertNotNull($point->player->id);
         

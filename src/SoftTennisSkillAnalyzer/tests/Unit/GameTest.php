@@ -20,7 +20,6 @@ class GameTest extends TestCase
         $game = factory(\App\Models\Game::class)->create();
 
         //検証
-        $this->assertNotNull($game->user->id);
         $this->assertNotNull($game->score->id);
         
     }

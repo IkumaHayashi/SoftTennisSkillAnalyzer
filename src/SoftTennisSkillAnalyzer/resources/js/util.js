@@ -1,4 +1,12 @@
 /**
+ * 共通で使う定数の宣言
+ */
+export const OK = 200
+export const CREATED = 201
+export const UNPROCESSABLE_ENTITY = 422
+export const INTERNAL_SERVER_ERROR = 500
+
+/**
  * クッキーの値を取得する
  * @param {String} searchKey 検索するキー
  * @returns {String} キーに対応する値

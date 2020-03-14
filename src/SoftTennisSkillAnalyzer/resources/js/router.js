@@ -5,6 +5,7 @@ import VueRouter from 'vue-router'
 import Scores from './pages/Scores.vue'
 import ScoresCreate from './pages/ScoresCreate.vue'
 import Login from './pages/Login.vue'
+import SystemError from './pages/errors/System.vue'
 
 // Vuesのストアをインポート
 import store from './store'
@@ -26,6 +27,10 @@ const routes = [
   {
     path: '/scores/create',
     component: ScoresCreate
+  },
+  {
+    path: '/500',
+    component: SystemError
   },
   {
     path: '/login',

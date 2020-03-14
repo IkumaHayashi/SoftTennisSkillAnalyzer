@@ -53,3 +53,9 @@ window.axios.interceptors.request.use(config => {
 
   return config
 })
+
+// エラーレスポンスを受け取ったときに一律的にエラーをセットする
+window.axios.interceptors.response.use(
+  response => response,
+  error => error.response || error
+)

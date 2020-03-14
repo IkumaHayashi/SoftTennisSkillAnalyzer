@@ -16,26 +16,27 @@ class CreateScoresTable extends Migration
         Schema::create('scores', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('player1_1_id');
-            $table->unsignedBigInteger('player1_2_id');
-            $table->unsignedBigInteger('player2_1_id');
-            $table->unsignedBigInteger('player2_2_id');
+            $table->unsignedBigInteger('player1_a_id');
+            $table->unsignedBigInteger('player1_b_id');
+            $table->unsignedBigInteger('player2_a_id');
+            $table->unsignedBigInteger('player2_b_id');
             $table->string('note', 200)->default('');
             $table->dateTime('match_day')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->tinyInteger('game_numbers')->default(7);
             $table->timestamps();
             
             $table->index('user_id');
 
-            $table->foreign('player1_1_id')
+            $table->foreign('player1_a_id')
                   ->references('id')->on('players')
                   ->onDelete('cascade');
-            $table->foreign('player1_2_id')
+            $table->foreign('player1_b_id')
                 ->references('id')->on('players')
                 ->onDelete('cascade');
-            $table->foreign('player2_1_id')
+            $table->foreign('player2_a_id')
                     ->references('id')->on('players')
                     ->onDelete('cascade');
-            $table->foreign('player2_2_id')
+            $table->foreign('player2_b_id')
                 ->references('id')->on('players')
                 ->onDelete('cascade');
         });

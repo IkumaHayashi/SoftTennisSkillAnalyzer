@@ -12,5 +12,6 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call(PointKindSeeder::class);
+        $this->call(ScoreTypeSeeder::class);
     }
 }

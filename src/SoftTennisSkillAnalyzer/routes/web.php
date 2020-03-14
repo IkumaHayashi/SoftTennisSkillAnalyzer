@@ -11,10 +11,14 @@
 |
 */
 
+Route::get('/{any?}', function () {
+    return view('index');
+})->where('any', '.+');
 Route::get('/', function () {
     return view('welcome');
 });
 
 Auth::routes();
 
+Route::resource('/scores', 'ScoreController');
 Route::get('/home', 'HomeController@index')->name('home');

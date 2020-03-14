@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
@@ -63,10 +63,22 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        return \App\User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+    }
+    
+    /**
+     * SPA対応のため登録時にredirectするのではなくUserオブジェクトを返す
+     *
+     * @param Request $request
+     * @param \App\User $user
+     * @return \App\User
+     */
+    protected function registered(Request $request, \App\User $user) : \App\User
+    {
+        return $user;
     }
 }

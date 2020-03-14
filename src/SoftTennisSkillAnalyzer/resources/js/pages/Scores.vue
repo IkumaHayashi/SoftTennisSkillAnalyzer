@@ -14,26 +14,29 @@
             </thead>
             <tbody>
               <tr v-for="score in scores">
-                <td>{{score.created_at}}</td> <!--TODO 試合日に変更する-->
+                <td>{{score.match_day}}</td>
                 <td>
                   <p>
-                    {{score.player1_1.organization.name}}
-                    {{score.player1_1.name}}
+                    {{score.player1_a.organization.name}}
+                    {{score.player1_a.name}}
                   </p>
                   <p>
-                    {{score.player1_2.organization.name}}
-                    {{score.player1_2.name}}</p>
+                    {{score.player1_b.organization.name}}
+                    {{score.player1_b.name}}
+                  </p>
                 </td>
                 <td>
                   vs
                 </td>
                 <td>
                   <p>
-                    {{score.player2_1.organization.name}}
-                    {{score.player2_1.name}}</p>
+                    {{score.player2_a.organization.name}}
+                    {{score.player2_a.name}}
+                  </p>
                   <p>
-                    {{score.player2_2.organization.name}}
-                    {{score.player2_2.name}}</p>
+                    {{score.player2_b.organization.name}}
+                    {{score.player2_b.name}}
+                  </p>
                 </td>
                 <td>{{score.match_day}}</p></td>
               </tr>
@@ -56,7 +59,7 @@
       axios
         .get('/api/scores')
         .then((response) => {
-          console.log(response)
+          console.log(response.data[0].player1_a)
           this.scores = response.data
         });
     }

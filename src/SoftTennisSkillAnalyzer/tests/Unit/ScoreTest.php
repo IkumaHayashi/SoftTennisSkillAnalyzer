@@ -21,10 +21,10 @@ class ScoreTest extends TestCase
 
         //検証
         $this->assertNotNull($score->user->id);
-        $this->assertNotNull($score->player1_1->id);
-        $this->assertNotNull($score->player1_2->id);
-        $this->assertNotNull($score->player2_1->id);
-        $this->assertNotNull($score->player2_2->id);
+        $this->assertNotNull($score->player1_a->id);
+        $this->assertNotNull($score->player1_b->id);
+        $this->assertNotNull($score->player2_a->id);
+        $this->assertNotNull($score->player2_b->id);
         
     }
 }

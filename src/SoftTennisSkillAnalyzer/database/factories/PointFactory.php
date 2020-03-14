@@ -15,7 +15,7 @@ $factory->define(\App\Models\Point::class, function (Faker $faker) {
 
     return [
         'game_id' => $game->id,
-        'end_player_id' => $game->score->player1_1->id,
+        'end_player_id' => $game->score->player1_A->id,
         'point_kind_id' => $pointKind->id,
         'is_winner' => true,
     ];

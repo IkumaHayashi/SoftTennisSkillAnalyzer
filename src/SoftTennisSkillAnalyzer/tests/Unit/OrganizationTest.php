@@ -8,7 +8,7 @@ use Tests\TestCase;
 
 class OrganizationTest extends TestCase
 {
-    //use RefreshDatabase;
+    use RefreshDatabase;
 
     /**
      * @test

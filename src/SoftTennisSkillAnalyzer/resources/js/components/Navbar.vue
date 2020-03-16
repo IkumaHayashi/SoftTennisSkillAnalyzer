@@ -1,25 +1,23 @@
 <template>
-  <nav class="navbar">
-    <RouterLink class="navbar__brand" to="/">
-      Vuesplash
-    </RouterLink>
-    <div class="navbar__menu">
-      <div v-if="isLogin" class="navbar__item">
-        <button class="button">
-          <i class="icon ion-md-add"></i>
-          Submit a photo
-        </button>
-      </div>
-      <span v-if="isLogin" class="navbar__item"> 
-        {{ username }}
-      </span>
-      <div v-else class="navbar__item">
-        <RouterLink class="button button--link" to="/login">
-          Login / Register
-        </RouterLink>
-      </div>
-    </div>
-  </nav>
+ <div>
+  <b-navbar toggleable="lg" type="dark" variant="info">
+    <b-navbar-brand href="/">そふてにあっぷ！</b-navbar-brand>
+
+    <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+
+    <b-collapse id="nav-collapse" is-nav>
+      <!-- ログイン済の表示 -->
+      <b-navbar-nav class="ml-auto" v-if="isLogin" >
+        <b-nav-item href="/scores/create">スコア登録</b-nav-item>
+      </b-navbar-nav>
+
+      <!-- 未ログインの表示 -->
+      <b-navbar-nav class="ml-auto" v-else>
+        <b-nav-item href="/login">ログイン / 会員登録</b-nav-item>
+      </b-navbar-nav>
+    </b-collapse>
+  </b-navbar>
+</div>
 </template>
 <script>
 export default {

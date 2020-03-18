@@ -5,9 +5,10 @@
 use Faker\Generator as Faker;
 
 $factory->define(\App\Models\Organization::class, function (Faker $faker) {
-
+    
+    $user = \App\User::first();
     return [
         'name' => 'そふてにあっぷクラブ',
-        'user_id' =>factory(\App\User::class)->create()->id,
+        'user_id' => $user->id,
     ];
 });

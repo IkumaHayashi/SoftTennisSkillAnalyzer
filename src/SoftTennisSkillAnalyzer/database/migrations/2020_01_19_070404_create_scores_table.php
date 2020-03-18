@@ -16,8 +16,10 @@ class CreateScoresTable extends Migration
         Schema::create('scores', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('organization1_id');
             $table->unsignedBigInteger('player1_a_id');
             $table->unsignedBigInteger('player1_b_id');
+            $table->unsignedBigInteger('organization2_id');
             $table->unsignedBigInteger('player2_a_id');
             $table->unsignedBigInteger('player2_b_id');
             $table->string('note', 200)->default('');
@@ -39,6 +41,12 @@ class CreateScoresTable extends Migration
             $table->foreign('player2_b_id')
                 ->references('id')->on('players')
                 ->onDelete('cascade');
+            $table->foreign('organization1_id')
+                    ->references('id')->on('organizations')
+                    ->onDelete('cascade');
+            $table->foreign('organization2_id')
+                    ->references('id')->on('organizations')
+                    ->onDelete('cascade');
         });
     }
 

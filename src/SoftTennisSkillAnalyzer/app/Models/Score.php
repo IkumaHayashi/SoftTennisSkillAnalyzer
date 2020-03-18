@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Score extends Model
 {
@@ -67,5 +68,35 @@ class Score extends Model
     private function player(string $attributeName)
     {
         return $this->belongsTo(Player::class, $attributeName);
+    }
+
+    /**
+     * 関連のあるOrganizationオブジェクトを返す
+     *
+     * @return BelongsTo
+     */
+    public function organization1(): BelongsTo
+    {
+        return $this->organization(__FUNCTION__ . '_id');
+    }
+    
+    /**
+     * 関連のあるOrganizationオブジェクトを返す
+     *
+     * @return BelongsTo
+     */
+    public function organization2(): BelongsTo
+    {
+        return $this->organization(__FUNCTION__ . '_id');
+    }
+    /**
+     * 渡されたOrganization番号のオブジェクトを返す
+     *
+     * @param string $attributeName
+     * @return Player
+     */
+    private function organization(string $attributeName): BelongsTo
+    {
+        return $this->belongsTo(Organization::class, $attributeName);
     }
 }

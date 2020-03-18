@@ -11,14 +11,12 @@ class ScoreIndexApiTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function setUp(): void
+    public function setup(): void
     {
         parent::setUp();
-
-        // テストユーザー作成
-        $this->user = factory(User::class)->create();
+        $this->seed();
+        $this->user = \App\User::first();
         $this->otherUser = factory(User::class)->create();
-        
     }
 
     /**
@@ -29,10 +27,6 @@ class ScoreIndexApiTest extends TestCase
         
         // 前準備
         $scores = factory(\App\Models\Score::class, 5)->create();
-        for($i = 0; $i < count($scores) - 1; $i++){
-            $scores[$i]->user_id = $this->user->id;
-            $scores[$i]->save();
-        }
         $scores[count($scores) - 1]->user_id = $this->otherUser->id;
         $scores[count($scores) - 1]->save();
 

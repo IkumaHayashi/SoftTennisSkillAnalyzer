@@ -16,7 +16,7 @@ class ScoreStoreApiTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-
+        $this->seed();
         // テストユーザー作成
         $this->user = factory(User::class)->create();
     }
@@ -28,27 +28,25 @@ class ScoreStoreApiTest extends TestCase
     {
         
         // 前準備
-        // プレイヤーを4人分作成して所有のUserをあとから変える
         $players = factory(\App\Models\Player::class, 4)->create();
-        foreach ($players as $player) {
-                $player->user_id = $this->user->id;
-                $player->save();
-        }
-        $scoreType = new ScoreType();
-        $scoreType->name = 'シングルス';
-        $scoreType->save();
+        $scoreType = \App\Models\ScoreType::first();
+        $organizations = \App\Models\Organization::take(2)->get();
 
         // 実行
         $response = $this->actingAs($this->user)
                     ->json('POST', route('scores.store'),[
-                        'player1_a' => $players[0],
-                        'player1_b' => $players[1],
-                        'player2_a' => $players[2],
-                        'player2_b' => $players[3],
-                        'score_type' => $scoreType,
-                        'game_numbers' => 7,
-                        'note' => 'テストデータ',
-                        'match_day' => new \DateTime(),
+                        'new_score' => [
+                            'organization1' => $organizations[0],
+                            'player1_a' => $players[0],
+                            'player1_b' => $players[1],
+                            'organization2' => $organizations[1],
+                            'player2_a' => $players[2],
+                            'player2_b' => $players[3],
+                            'score_type' => $scoreType,
+                            'game_numbers' => 7,
+                            'note' => 'テストデータ',
+                            'match_day' => new \DateTime(),
+                        ],
                     ]);
         // 検証
         $response->assertStatus(201);

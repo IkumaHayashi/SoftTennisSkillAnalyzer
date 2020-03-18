@@ -37,16 +37,12 @@ class ScoreController extends Controller
     public function create()
     {
         // 生成に必要なデータを取得
-        $organization = \App\Models\Organization::get();
-        $score = new \App\Models\Score();
         return [
-                'oraganization' => $organization,
-                'score_types' => config('score.types'),
-                'game_numbers' => config('score.game_numbers'),
-                'score' => $score,
+            'oraganizations' => \App\Models\Organization::get(),
+            'score_types' => \App\Models\ScoreType::get(),
+            'game_numbers' => config('score.game_numbers'),
         ];
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -55,15 +51,17 @@ class ScoreController extends Controller
      */
     public function store(Request $request)
     {
-            $score = new Score();
-            $score->player1_a_id = $request->input('player1_a.id');
-            $score->player1_b_id = $request->input('player1_b.id');
-            $score->player2_a_id = $request->input('player2_a.id');
-            $score->player2_b_id = $request->input('player2_b.id');
-            $score->note = $request->input('note');
-            $score->game_numbers = $request->input('game_numbers');
-            $score->score_type_id = $request->input('score_type.id');
-            Auth::user()->scores()->save($score);
+        $score = new Score();
+        $score->organization1_id = $request->input('new_score.organization1.id');
+        $score->player1_a_id = $request->input('new_score.player1_a.id');
+        $score->player1_b_id = $request->input('new_score.player1_b.id');
+        $score->organization2_id = $request->input('new_score.organization1.id');
+        $score->player2_a_id = $request->input('new_score.player2_a.id');
+        $score->player2_b_id = $request->input('new_score.player2_b.id');
+        $score->note = $request->input('new_score.note');
+        $score->game_numbers = $request->input('new_score.game_numbers');
+        $score->score_type_id = $request->input('new_score.score_type.id');
+        Auth::user()->scores()->save($score);
         return response($score, 201);
     }
 

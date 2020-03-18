@@ -11,10 +11,16 @@ class PlayerTest extends TestCase
 {
     use RefreshDatabase;
 
+    public function setup(): void
+    {
+        parent::setUp();
+        $this->seed();
+    }
+
     /**
      * @test
      */
-    public function User、Organizationが参照出来る()
+    public function Userが参照出来る()
     {
         //前準備
         //実行
@@ -22,7 +28,6 @@ class PlayerTest extends TestCase
 
         //検証
         $this->assertNotNull($player->user);
-        $this->assertNotNull($player->organization);
         
     }
 }

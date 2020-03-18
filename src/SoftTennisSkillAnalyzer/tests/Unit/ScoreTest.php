@@ -10,6 +10,12 @@ class ScoreTest extends TestCase
 {
     use RefreshDatabase;
 
+    public function setup(): void
+    {
+        parent::setUp();
+        $this->seed();
+    }
+
     /**
      * @test
      */

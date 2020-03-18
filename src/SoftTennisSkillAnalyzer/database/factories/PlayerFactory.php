@@ -6,10 +6,10 @@ use Faker\Generator as Faker;
 
 $factory->define(\App\Models\Player::class, function (Faker $faker) {
 
-    $organization = factory(\App\Models\Organization::class)->create();
+    $user = \App\User::first();
+
     return [
         'name' => $faker->name,
-        'organization_id' => $organization->id,
-        'user_id' => $organization->user->id
+        'user_id' => $user->id
     ];
 });

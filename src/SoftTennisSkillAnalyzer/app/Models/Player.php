@@ -28,7 +28,7 @@ class Player extends Model
 
     public function storePoint(User $user, Game $game, bool $isWinner, PointKind $pointKind)
     {
-        $point = new Pint([
+        $point = new Point([
             'user_id' => $user->id,
             'end_player_id' => $this->id,
             'point_kind_id' => $pointKind->id,

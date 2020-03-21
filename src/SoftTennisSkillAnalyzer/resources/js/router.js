@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 // ページコンポーネントをインポートする
 import Scores from './pages/Scores.vue'
 import ScoresCreate from './pages/ScoresCreate.vue'
+import ScoresEdit from './pages/ScoresEdit.vue'
 import Login from './pages/Login.vue'
 import SystemError from './pages/errors/System.vue'
 
@@ -29,7 +30,17 @@ const routes = [
     component: ScoresCreate
   },
   {
+    path: '/scores/:id/edit',
+    name: 'scores.edit',
+    component: ScoresEdit,
+    props: true
+  },
+  {
     path: '/500',
+    component: SystemError
+  },
+  {
+    path: '/404',
     component: SystemError
   },
   {

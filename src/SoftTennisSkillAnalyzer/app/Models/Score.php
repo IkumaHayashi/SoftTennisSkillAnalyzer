@@ -7,6 +7,15 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Score extends Model
 {
+    protected $appends = [
+        'organization1_name',
+        'player1_a_name',
+        'player1_b_name',
+        'organization2_name',
+        'player2_a_name',
+        'player2_b_name',
+        'game_count',
+    ];
     /**
      * 関連のあるUserオブジェクトを返す
      *
@@ -29,8 +38,9 @@ class Score extends Model
      */
     public function player1_a()
     {
-        return $this->player('player1_a_id');
+        return $this->belongsTo(Player::class, __FUNCTION__ . '_id');
     }
+
     /**
      * 関連のあるPlauerオブジェクトを返す
      *
@@ -38,7 +48,7 @@ class Score extends Model
      */
     public function player1_b()
     {
-        return $this->player(__FUNCTION__ . '_id');
+        return $this->belongsTo(Player::class, __FUNCTION__ . '_id');
     }
     /**
      * 関連のあるPlauerオブジェクトを返す
@@ -47,8 +57,9 @@ class Score extends Model
      */
     public function player2_a()
     {
-        return $this->player(__FUNCTION__ . '_id');
+        return $this->belongsTo(Player::class, __FUNCTION__ . '_id');
     }
+
     /**
      * 関連のあるPlauerオブジェクトを返す
      *
@@ -56,18 +67,7 @@ class Score extends Model
      */
     public function player2_b()
     {
-        return $this->player(__FUNCTION__ . '_id');
-    }
-
-    /**
-     * 渡されたplayer番号のオブジェクトを返す
-     *
-     * @param string $attributeName
-     * @return Player
-     */
-    private function player(string $attributeName)
-    {
-        return $this->belongsTo(Player::class, $attributeName);
+        return $this->belongsTo(Player::class, __FUNCTION__ . '_id');
     }
 
     /**
@@ -77,7 +77,7 @@ class Score extends Model
      */
     public function organization1(): BelongsTo
     {
-        return $this->organization(__FUNCTION__ . '_id');
+        return $this->belongsTo(Organization::class, __FUNCTION__ . '_id');
     }
     
     /**
@@ -87,16 +87,28 @@ class Score extends Model
      */
     public function organization2(): BelongsTo
     {
-        return $this->organization(__FUNCTION__ . '_id');
+        return $this->belongsTo(Organization::class, __FUNCTION__ . '_id');
     }
-    /**
-     * 渡されたOrganization番号のオブジェクトを返す
-     *
-     * @param string $attributeName
-     * @return Player
-     */
-    private function organization(string $attributeName): BelongsTo
-    {
-        return $this->belongsTo(Organization::class, $attributeName);
+
+    public function getPlayer1ANameAttribute(){
+        return $this->player1_a->name;
+    }
+    public function getPlayer1BNameAttribute(){
+        return $this->player1_b->name;
+    }
+    public function getPlayer2ANameAttribute(){
+        return $this->player2_a->name;
+    }
+    public function getPlayer2BNameAttribute(){
+        return $this->player2_b->name;
+    }
+    public function getOrganization1NameAttribute(){
+        return $this->organization1->name;
+    }
+    public function getOrganization2NameAttribute(){
+        return $this->organization2->name;
+    }
+    public function getGameCountAttribute(){
+        return '4-2';
     }
 }

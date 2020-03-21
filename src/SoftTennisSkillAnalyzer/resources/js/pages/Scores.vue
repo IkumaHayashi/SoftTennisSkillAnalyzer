@@ -14,7 +14,7 @@
             </thead>
             <tbody>
               <tr v-for="score in user_scores">
-                <td>{{score.match_day}}</td>
+                <td>{{score.match_day | moment }}</td>
                 <td>
                   {{score.organization1.name}}
                   <p>
@@ -36,7 +36,13 @@
                     {{score.player2_b.name}}
                   </p>
                 </td>
-                <td>{{score.match_day}}</p></td>
+                <td>
+                
+                  <RouterLink class="nav-link" :to="{name:'scores.edit',params:{id: score.id}}">
+                    {{score.game_count}}
+                  </RouterLink>
+                  
+                </td>
               </tr>
             </tbody>
           </table>
@@ -48,6 +54,7 @@
 
 <script>
   import { mapState, mapGetters } from 'vuex'
+  import moment from 'moment';  
   export default {
     computed: {
       ...mapState({
@@ -68,7 +75,7 @@
         await this.$store.dispatch('score/getUserScores')
       },
     },
-    async mouted() {
+    async mounted() {
       await this.setUserScores()
     },
     async created() {
@@ -76,5 +83,10 @@
         this.$router.push('/login')
       }
     },
+    filters: {
+      moment: function (date) {
+        return moment(date).format('YYYY/MM/DD');
+      }
+    }
   }
 </script>

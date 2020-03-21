@@ -51,12 +51,12 @@ class ScoreController extends Controller
     public function store(Request $request)
     {
         $user = Auth::user();
-        $organization1 = $user->organization($request->input('new_score.organization_name1'));
-        $organization2 = $user->organization($request->input('new_score.organization_name2'));
-        $player1_a = $user->player($request->input('new_score.player_name1_a'));
-        $player1_b = $user->player($request->input('new_score.player_name1_b'));
-        $player2_a = $user->player($request->input('new_score.player_name2_a'));
-        $player2_b = $user->player($request->input('new_score.player_name2_b'));
+        $organization1 = $user->organization($request->input('new_or_edit_score.organization1_name'));
+        $organization2 = $user->organization($request->input('new_or_edit_score.organization2_name'));
+        $player1_a = $user->player($request->input('new_or_edit_score.player1_a_name'));
+        $player1_b = $user->player($request->input('new_or_edit_score.player1_b_name'));
+        $player2_a = $user->player($request->input('new_or_edit_score.player2_a_name'));
+        $player2_b = $user->player($request->input('new_or_edit_score.player2_b_name'));
 
         $score = new Score();
         $score->organization1_id = $organization1->id;
@@ -65,9 +65,9 @@ class ScoreController extends Controller
         $score->organization2_id = $organization2->id;
         $score->player2_a_id = $player2_a->id;
         $score->player2_b_id = $player2_b->id;
-        $score->note = $request->input('new_score.note');
-        $score->game_numbers = $request->input('new_score.game_number');
-        $score->score_type_id = \App\Models\ScoreType::find($request->input('new_score.score_type_id'))->id;
+        $score->note = $request->input('new_or_edit_score.note');
+        $score->game_number = $request->input('new_or_edit_score.game_number');
+        $score->score_type_id = \App\Models\ScoreType::find($request->input('new_or_edit_score.score_type_id'))->id;
         $user->scores()->save($score);
 
         return response($score, 201);
@@ -92,7 +92,8 @@ class ScoreController extends Controller
      */
     public function edit($id)
     {
-        //
+        $score = Auth::user()->scores()->find($id);
+        return $score ?? abort(404);
     }
 
     /**

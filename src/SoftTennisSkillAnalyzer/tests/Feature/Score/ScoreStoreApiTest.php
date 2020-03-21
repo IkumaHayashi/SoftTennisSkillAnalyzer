@@ -35,13 +35,13 @@ class ScoreStoreApiTest extends TestCase
         // 実行
         $response = $this->actingAs($this->user)
                     ->json('POST', route('scores.store'),[
-                        'new_score' => [
-                            'organization_name1' => $organizations[0]->name,
-                            'player_name1_a' => $players[0]->name,
-                            'player_name1_b' => $players[1]->name,
-                            'organization_name2' => $organizations[0]->name,
-                            'player_name2_a' => $players[2]->name,
-                            'player_name2_b' => $players[3]->name,
+                        'new_or_edit_score' => [
+                            'organization1_name' => $organizations[0]->name,
+                            'player1_a_name' => $players[0]->name,
+                            'player1_b_name' => $players[1]->name,
+                            'organization2_name' => $organizations[0]->name,
+                            'player2_a_name' => $players[2]->name,
+                            'player2_b_name' => $players[3]->name,
                             'score_type_id' => $scoreType->id,
                             'game_number' => 7,
                             'note' => 'テストデータ',
@@ -57,7 +57,7 @@ class ScoreStoreApiTest extends TestCase
         $this->assertNotNull($score->player2_b->id);
         $this->assertNotNull($score->note);
         $this->assertNotNull($score->match_day);
-        $this->assertNotNull($score->game_numbers);
+        $this->assertNotNull($score->game_number);
         
     }
 }

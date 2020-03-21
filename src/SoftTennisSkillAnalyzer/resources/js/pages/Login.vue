@@ -118,7 +118,6 @@ export default {
       await this.$store.dispatch('auth/login', this.loginForm)
 
       if (this.apiStatus) {
-        console.log('Login.vue apiStatus = ' + this.apiStatus)
         // トップページに移動する
         this.$router.push('/')
       }

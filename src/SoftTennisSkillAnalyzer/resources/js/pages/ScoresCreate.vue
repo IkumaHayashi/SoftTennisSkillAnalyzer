@@ -4,15 +4,15 @@
       <div class="card">
         <div class="card-header">スコア作成</div>
         <div class="card-body">
-            <form action="/scores" method="POST">
+            <form @submit.prevent="storeScore" >
           
             <!-- シングルス or ダブルス -->
             <div class="form-group">
-              <div v-for="score_type,key of score_types" :key="key"
+              <div v-for="score_type of score_types" :key="score_type.id"
                 class="custom-control custom-radio custom-control-inline">
-                <input type="radio" :id="'score_type_' + key" name="score_type" class="custom-control-input"
-                  v-model="selected_score_type":value="key">
-                <label class="custom-control-label" :for="'score_type_' + key">{{ score_type }}</label>
+                <input type="radio" :id="'score_type_' + score_type.id" name="score_type" class="custom-control-input"
+                  v-model="new_score.score_type_id" :value="score_type.id">
+                <label class="custom-control-label" :for="'score_type_' + score_type.id">{{ score_type.name }}</label>
               </div>
             </div>
 
@@ -22,7 +22,7 @@
                   class="custom-control custom-radio custom-control-inline">
                 
                 <input type="radio" :id="'game_numbers_' + game_number" name="game_numbers" class="custom-control-input"
-                  v-model="selected_game_number" :value="game_number">
+                  v-model="new_score.game_number" :value="game_number">
                 <label class="custom-control-label" :for="'game_numbers_' + game_number" >
                   {{game_number}}ゲーム
                 </label>
@@ -31,67 +31,94 @@
 
             <div class="form-group">
               <div class="input-group">
-                <div class="dropdown">
-                  <input type="text" name="list_name" class="form-control dropdown-toggle" data-toggle="dropdown"
-                        placeholder="所属"  aria-label="チーム1">
-                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <li v-for="organization in organizations" :key="organization.id"
-                        class="autocomplete" :data-autocomplete=organization.name data-target="list_name">
-                      <a href="#">{{ organization.name }}</a>
-                    </li>
-                  </ul>
-                </div>
+              
+                <!-- チーム1 の組織名 -->
+                <vue-simple-suggest
+                  v-model="new_score.organization_name1"
+                  :list="organizations"
+                  :filter-by-query="true"
+                  :styles="autoCompleteStyle"
+                  display-attribute="name">
+                </vue-simple-suggest>
                 
+                <!-- プレイヤー1-Aの名前 -->
                 <div class="input-group-prepend">
                   <span class="input-group-text">A</span>
                 </div>
-                <input type="text" class="form-control" aria-label="プレイヤー1-A">
+                <vue-simple-suggest
+                  v-model="new_score.player_name1_a"
+                  :list="this.players"
+                  :filter-by-query="true"
+                  :styles="autoCompleteStyle"
+                  display-attribute="name">
+                </vue-simple-suggest>
                 
+                <!-- プレイヤー1-Bの名前 -->
                 <div class="input-group-prepend">
                   <span class="input-group-text">B</span>
                 </div>
-                <input type="text" class="form-control" aria-label="プレイヤー1-B">
+                <vue-simple-suggest
+                  v-model="new_score.player_name1_b"
+                  :list="this.players"
+                  :filter-by-query="true"
+                  :styles="autoCompleteStyle"
+                  display-attribute="name">
+                </vue-simple-suggest>
               </div>
             </div>
             
             <div class="form-group">
-              <!-- 対戦相手のチーム -->
+                <!-- チーム2 の組織名 -->
               <div class="input-group">
-                <div class="dropdown">
-                  <input type="text" name="list_name" class="form-control dropdown-toggle" data-toggle="dropdown"
-                        placeholder="所属"  aria-label="チーム2">
-                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <li v-for="organization in organizations" :key="organization.id"
-                        class="autocomplete" :data-autocomplete=organization.name data-target="list_name">
-                      <a href="#">{{ organization.name }}</a>
-                    </li>
-                  </ul>
-                </div>
+                <vue-simple-suggest
+                  v-model="new_score.organization_name2"
+                  :list="this.organizations"
+                  :filter-by-query="true"
+                  :styles="autoCompleteStyle"
+                  display-attribute="name">
+                </vue-simple-suggest>
+                
+                <!-- プレイヤー2-Aの名前 -->
                 <div class="input-group-prepend">
                   <span class="input-group-text">A</span>
                 </div>
-                <input type="text" class="form-control" aria-label="プレイヤー2-A">
+                <vue-simple-suggest
+                  v-model="new_score.player_name2_a"
+                  :list="this.players"
+                  :filter-by-query="true"
+                  :styles="autoCompleteStyle"
+                  display-attribute="name">
+                </vue-simple-suggest>
+                
+                <!-- プレイヤー2-Bの名前 -->
                 <div class="input-group-prepend">
                   <span class="input-group-text">B</span>
                 </div>
-                <input type="text" class="form-control" aria-label="プレイヤー2-B">
+                <vue-simple-suggest
+                  v-model="new_score.player_name2_b"
+                  :list="this.players"
+                  :filter-by-query="true"
+                  :styles="autoCompleteStyle"
+                  display-attribute="name">
+                </vue-simple-suggest>
               </div>
             </div>
 
             <!-- 試合日 -->
             <div class="form-group">
               <label for="match_day_picker">試合日</label>
-              <datepicker :language="ja" :format="DatePickerFormat" v-model="selected_match_day"
+              <datepicker :language="ja" :format="DatePickerFormat" v-model="new_score.match_day"
                 id="match_day_picker" input-class="form-control"></datepicker>
             </div>
 
             <!-- メモ -->
             <div class="form-group">
               <label for="note">メモ</label>
-              <input type="text" class="form-control" id="note" placeholder="メモを記入ください">
+              <input type="text" class="form-control" id="note" placeholder="メモを記入ください"
+                v-model="new_score.note">
             </div>
 
-            <button class="btn btn-primary" type="submit">作成</button>
+            <button class="btn btn-primary" type="submit">記録を開始</button>
           </form>
         </div>
       </div>
@@ -100,48 +127,72 @@
 </template>
 
 <script>
-  import Datepicker from 'vuejs-datepicker';
+  import VueSimpleSuggest from 'vue-simple-suggest'
+  import 'vue-simple-suggest/dist/styles.css' // Using a css-loader
+  import Datepicker from 'vuejs-datepicker'
   import {ja} from 'vuejs-datepicker/dist/locale'
+  import { OK } from '../util'
+  import { mapState, mapGetters } from 'vuex'
+
   export default {
     components: {
-      Datepicker
+      Datepicker,
+      VueSimpleSuggest
+    },
+    computed: {
+      ...mapState({
+        score_types: state => state.score.score_types,
+        organizations: state => state.score.organizations,
+        game_numbers: state => state.score.game_numbers,
+        players: state => state.score.players,
+      }),
+      ...mapGetters({
+        isLogin: 'auth/check'
+      })
     },
     data() {
       return {
-        game_numbers: null,
-        score_types: null,
-        organizations: null,
-        selected_game_number: null,
-        selected_score_type: null,
-        selected_match_day: null,
-        
+        new_score: {
+          'game_number': 7,
+          'score_type_id': 2,
+          'match_day': null,
+          'note': '',
+          'organization_name1': null,
+          'organization_name2': null,
+          'player_name1_a' : null,
+          'player_name1_b' : null,
+          'player_name2_a' : null,
+          'player_name2_b' : null,
+        },
         ja:ja,
         DatePickerFormat: 'yyyy年MM月dd日',
+        autoCompleteStyle : {
+          vueSimpleSuggest: "position-relative",
+          inputWrapper: "",
+          defaultInput : "form-control",
+          suggestions: "position-absolute list-group z-1000",
+          suggestItem: "list-group-item"
+        }
       }
     },
-    mounted() {
-      axios
-        .get('/api/scores/create')
-        .then((response) => {
-          this.organizations = response.data.oraganization;
-          this.game_numbers = response.data.game_numbers;
-          this.score_types = response.data.score_types;
-          console.log(response.data.game_numbers);
-          console.log(response.data.score_types);
-        });
+    async mounted() {
+      await this.setCreateForm()
+    },
+    async created() {
+      if (!this.isLogin) {
+        this.$router.push('/login')
+      }
     },
     methods: {
-      post() {
-        console.log('post!!');
-        const params = new URLSearchParams();
-        params.append('game_number', this.selected_game_number);
-        params.append('score_type', this.selected_score_type);
-        params.append('match_day', this.selected_match_day);
-
-        axios.post('/api/scores', params,)
-          .then(respose => {
-          })
+      // フォームに必要な情報を取得
+      async setCreateForm () {
+        await this.$store.dispatch('score/getCreateForm')
+      },
+      async storeScore () {
+        const response = await axios.post(`/api/scores`, {
+          new_score: this.new_score
+        })
       }
-    }
+    },
   }
 </script>

@@ -36,14 +36,14 @@ class ScoreStoreApiTest extends TestCase
         $response = $this->actingAs($this->user)
                     ->json('POST', route('scores.store'),[
                         'new_score' => [
-                            'organization1' => $organizations[0],
-                            'player1_a' => $players[0],
-                            'player1_b' => $players[1],
-                            'organization2' => $organizations[1],
-                            'player2_a' => $players[2],
-                            'player2_b' => $players[3],
-                            'score_type' => $scoreType,
-                            'game_numbers' => 7,
+                            'organization_name1' => $organizations[0]->name,
+                            'player_name1_a' => $players[0]->name,
+                            'player_name1_b' => $players[1]->name,
+                            'organization_name2' => $organizations[0]->name,
+                            'player_name2_a' => $players[2]->name,
+                            'player_name2_b' => $players[3]->name,
+                            'score_type_id' => $scoreType->id,
+                            'game_number' => 7,
                             'note' => 'テストデータ',
                             'match_day' => new \DateTime(),
                         ],

@@ -17,14 +17,12 @@ class ScoreController extends Controller
     public function index()
     {
         return Score::where('user_id' ,    Auth::user()->id )->with([
-            'player1_a'
+            'organization1'
+            , 'player1_a'
             , 'player1_b'
+            , 'organization2'
             , 'player2_a'
             , 'player2_b'
-            , 'player1_a.organization'
-            , 'player1_b.organization'
-            , 'player2_a.organization'
-            , 'player2_b.organization'
             , 'score_type'
         ])->get();
     }
@@ -38,9 +36,10 @@ class ScoreController extends Controller
     {
         // 生成に必要なデータを取得
         return [
-            'oraganizations' => \App\Models\Organization::get(),
+            'organizations' => Auth::user()->organizations()->get(),
             'score_types' => \App\Models\ScoreType::get(),
             'game_numbers' => config('score.game_numbers'),
+            'players' =>  Auth::user()->players()->get(),
         ];
     }
     /**
@@ -51,17 +50,26 @@ class ScoreController extends Controller
      */
     public function store(Request $request)
     {
+        $user = Auth::user();
+        $organization1 = $user->organization($request->input('new_score.organization_name1'));
+        $organization2 = $user->organization($request->input('new_score.organization_name2'));
+        $player1_a = $user->player($request->input('new_score.player_name1_a'));
+        $player1_b = $user->player($request->input('new_score.player_name1_b'));
+        $player2_a = $user->player($request->input('new_score.player_name2_a'));
+        $player2_b = $user->player($request->input('new_score.player_name2_b'));
+
         $score = new Score();
-        $score->organization1_id = $request->input('new_score.organization1.id');
-        $score->player1_a_id = $request->input('new_score.player1_a.id');
-        $score->player1_b_id = $request->input('new_score.player1_b.id');
-        $score->organization2_id = $request->input('new_score.organization1.id');
-        $score->player2_a_id = $request->input('new_score.player2_a.id');
-        $score->player2_b_id = $request->input('new_score.player2_b.id');
+        $score->organization1_id = $organization1->id;
+        $score->player1_a_id = $player1_a->id;
+        $score->player1_b_id = $player1_b->id;
+        $score->organization2_id = $organization2->id;
+        $score->player2_a_id = $player2_a->id;
+        $score->player2_b_id = $player2_b->id;
         $score->note = $request->input('new_score.note');
-        $score->game_numbers = $request->input('new_score.game_numbers');
-        $score->score_type_id = $request->input('new_score.score_type.id');
-        Auth::user()->scores()->save($score);
+        $score->game_numbers = $request->input('new_score.game_number');
+        $score->score_type_id = \App\Models\ScoreType::find($request->input('new_score.score_type_id'))->id;
+        $user->scores()->save($score);
+
         return response($score, 201);
     }
 

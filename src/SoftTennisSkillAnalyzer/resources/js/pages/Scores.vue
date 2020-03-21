@@ -13,15 +13,14 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="score in scores">
+              <tr v-for="score in user_scores">
                 <td>{{score.match_day}}</td>
                 <td>
+                  {{score.organization1.name}}
                   <p>
-                    {{score.player1_a.organization.name}}
                     {{score.player1_a.name}}
                   </p>
                   <p>
-                    {{score.player1_b.organization.name}}
                     {{score.player1_b.name}}
                   </p>
                 </td>
@@ -29,12 +28,11 @@
                   vs
                 </td>
                 <td>
+                  {{score.organization2.name}}
                   <p>
-                    {{score.player2_a.organization.name}}
                     {{score.player2_a.name}}
                   </p>
                   <p>
-                    {{score.player2_b.organization.name}}
                     {{score.player2_b.name}}
                   </p>
                 </td>
@@ -49,19 +47,34 @@
 </template>
 
 <script>
+  import { mapState, mapGetters } from 'vuex'
   export default {
+    computed: {
+      ...mapState({
+        user_scores: state => state.score.user_scores,
+      }),
+      ...mapGetters({
+        isLogin: 'auth/check'
+      })
+    },
     data() {
       return {
         scores: null,
       }
     },
-    mounted() {
-      axios
-        .get('/api/scores')
-        .then((response) => {
-          console.log(response.data[0].player1_a)
-          this.scores = response.data
-        });
-    }
+    methods: {
+      // フォームに必要な情報を取得
+      async setUserScores () {
+        await this.$store.dispatch('score/getUserScores')
+      },
+    },
+    async mouted() {
+      await this.setUserScores()
+    },
+    async created() {
+      if (!this.isLogin) {
+        this.$router.push('/login')
+      }
+    },
   }
 </script>

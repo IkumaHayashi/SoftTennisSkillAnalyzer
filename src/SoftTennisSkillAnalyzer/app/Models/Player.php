@@ -26,4 +26,14 @@ class Player extends Model
         return $this->belongsTo(Organization::class);
     }
 
+    public function storePoint(User $user, Game $game, bool $isWinner, PointKind $pointKind)
+    {
+        $point = new Pint([
+            'user_id' => $user->id,
+            'end_player_id' => $this->id,
+            'point_kind_id' => $pointKind->id,
+            'is_winner' => $isWinner,
+        ]);
+        $game->points()->save($point);
+    }
 }

@@ -1,19 +1,25 @@
 <template>
  <div>
   <b-navbar toggleable="lg" type="dark" variant="info">
-    <b-navbar-brand href="/">そふてにあっぷ！</b-navbar-brand>
+    <RouterLink class="navbar-brand" to="/">
+      そふてにあっぷ！
+    </RouterLink>
 
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
     <b-collapse id="nav-collapse" is-nav>
       <!-- ログイン済の表示 -->
       <b-navbar-nav class="ml-auto" v-if="isLogin" >
-        <b-nav-item href="/scores/create">スコア登録</b-nav-item>
+        <RouterLink class="nav-link" to="/scores/create">
+          スコア登録
+        </RouterLink>
       </b-navbar-nav>
 
       <!-- 未ログインの表示 -->
       <b-navbar-nav class="ml-auto" v-else>
-        <b-nav-item href="/login">ログイン / 会員登録</b-nav-item>
+        <RouterLink class="nav-link" to="/login">
+          ログイン / 会員登録
+        </RouterLink>
       </b-navbar-nav>
     </b-collapse>
   </b-navbar>

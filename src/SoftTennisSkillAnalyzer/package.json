@@ -29,6 +29,8 @@
     },
     "dependencies": {
         "bootstrap-vue": "^2.7.0",
+        "moment": "^2.24.0",
+        "vue-simple-suggest": "^1.10.1",
         "vuejs-datepicker": "^1.6.2"
     }
 }
